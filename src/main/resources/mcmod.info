@@ -1,0 +1,20 @@
+[
+{
+  "modid": "ElConCore",
+  "name": "ElConCore",
+  "description": "ElConCore is a library made by ElConquistador, which adds commonly used functions",
+  "version": "${version}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "ElConquistador"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]

@@ -1,4 +1,4 @@
 ElConQore
 =========
 
-Core mod for all my other mods
+Core mod for all my Minecraft mods
