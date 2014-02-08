@@ -59,8 +59,13 @@ task release(type: Copy) {
 	into project.file(config.release_location.replace('{NAME}', config.mod_name).replace('{MC}', config.minecraft_version).replace('{MODVER}', config.mod_version).replace('{BUILD}', "${System.getenv().BUILD_NUMBER}"))
 }
 
+task cleanJenkins(type: Delete) {
+	delete fileTree(dir: "packages")
+}
+
 task jenkins(type: Copy) {
+	dependsOn cleanJenkins
+
 	from project.tasks.jar.destinationDir
 	into project.file(config.jenkins_location.replace('{NAME}', config.mod_name).replace('{MC}', config.minecraft_version).replace('{MODVER}', config.mod_version).replace('{BUILD}', "${System.getenv().BUILD_NUMBER}"))
 }
-
