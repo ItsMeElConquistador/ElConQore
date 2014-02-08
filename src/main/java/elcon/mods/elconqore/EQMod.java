@@ -39,6 +39,12 @@ public class EQMod {
 		if(mod.getClass().getAnnotation(Mod.class) != null) {
 			this.mod = mod.getClass().getAnnotation(Mod.class);
 			this.versionURL = versionURL;
+			this.config = config;
+			this.sourceFile = sourceFile;
+			
+			config.load();
+			config.save();
+			
 			mods.put(this.mod.modid(), this);
 		} else {
 			ElConQore.log.error(mod + " does not have the @Mod annotation, so can't create an ElConQoreMod for it");

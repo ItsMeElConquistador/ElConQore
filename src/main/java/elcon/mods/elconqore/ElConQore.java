@@ -70,5 +70,6 @@ public class ElConQore {
 		LanguageManager.setLocatization("en_US", "elconqore.version.general_error", "Error while connecting to remote version authority file; trying again");
 		LanguageManager.setLocatization("en_US", "elconqore.version.final_error", "Version check stopping after three unsuccessful connection attempts");
 		LanguageManager.setLocatization("en_US", "elconqore.version.mc_version_not_found", "Unable to find a version of @MOD_NAME@ for @MINECRAFT_VERSION@ in the remote version authority");
+		LanguageManager.setLocatization("en_US", "elconqore.version.chat_hover", "Click this to go the update page");
 	}
 }

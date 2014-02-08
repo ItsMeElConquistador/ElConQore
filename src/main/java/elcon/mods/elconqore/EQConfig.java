@@ -14,9 +14,9 @@ public class EQConfig {
 	
 	public Configuration config;
 	
-	public boolean DISPLAY_VERSION_RESULT = true;
-	public String LAST_DISCOVERED_VERSION = "";
-	public String LAST_DISCOVERED_VERSION_TYPE = "";
+	public boolean displayVersionResult = true;
+	public String lastDiscoveredVersion = "";
+	public String lastDiscoveredVersionType = "";
 	
 	public EQConfig(Configuration config) {
 		this.config = config;

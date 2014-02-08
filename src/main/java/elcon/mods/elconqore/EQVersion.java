@@ -4,8 +4,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
+import net.minecraft.util.EnumChatFormatting;
 import cpw.mods.fml.common.Loader;
-import elcon.mods.elconqore.color.Color;
 import elcon.mods.elconqore.lang.LanguageManager;
 
 public class EQVersion implements Runnable {
@@ -49,7 +49,7 @@ public class EQVersion implements Runnable {
 					mod.versionResult = ERROR;
 				}
 				if(mod.remoteVersion != null) {
-					if(!mod.config.LAST_DISCOVERED_VERSION.equalsIgnoreCase(mod.remoteVersion)) {
+					if(!mod.config.lastDiscoveredVersion.equalsIgnoreCase(mod.remoteVersion)) {
 						mod.config.set(EQConfig.CATEGORY_VERSION, "last_discovered_version", mod.remoteVersion);
 					}					
 					if(mod.remoteVersion.equalsIgnoreCase(getVersionForCheck(mod))) {
@@ -135,10 +135,10 @@ public class EQVersion implements Runnable {
 
 	public static String getResultMessageForClient(EQMod mod) {
 		String returnString = LanguageManager.getLocalization(OUTDATED_MESSAGE);
-		returnString = returnString.replace("@MOD_NAME@", Color.TEXT_COLOR_PREFIX_YELLOW + mod.mod.name() + Color.TEXT_COLOR_PREFIX_WHITE);
-		returnString = returnString.replace("@REMOTE_MOD_VERSION@", Color.TEXT_COLOR_PREFIX_YELLOW + mod.remoteVersion + Color.TEXT_COLOR_PREFIX_WHITE);
-		returnString = returnString.replace("@MINECRAFT_VERSION@", Color.TEXT_COLOR_PREFIX_YELLOW + Loader.instance().getMCVersionString() + Color.TEXT_COLOR_PREFIX_WHITE);
-		returnString = returnString.replace("@MOD_UPDATE_LOCATION@", Color.TEXT_COLOR_PREFIX_YELLOW + mod.remoteUpdateLocation + Color.TEXT_COLOR_PREFIX_WHITE);
+		returnString = returnString.replace("@MOD_NAME@", EnumChatFormatting.YELLOW + mod.mod.name() + EnumChatFormatting.WHITE);
+		returnString = returnString.replace("@REMOTE_MOD_VERSION@", EnumChatFormatting.YELLOW + mod.remoteVersion + EnumChatFormatting.WHITE);
+		returnString = returnString.replace("@MINECRAFT_VERSION@", EnumChatFormatting.YELLOW + Loader.instance().getMCVersionString() + EnumChatFormatting.WHITE);
+		returnString = returnString.replace("@MOD_UPDATE_LOCATION@", EnumChatFormatting.YELLOW + mod.remoteUpdateLocation + EnumChatFormatting.WHITE);
 		return returnString;
 	}
 

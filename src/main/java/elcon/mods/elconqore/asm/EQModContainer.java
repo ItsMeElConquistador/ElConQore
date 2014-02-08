@@ -15,11 +15,12 @@ public class EQModContainer extends DummyModContainer {
 	public EQModContainer() {
 		super(new ModMetadata());
 		ModMetadata meta = getMetadata();
-		meta.modId = "ElConQore-ASM";
-		meta.name = "ElConQore-ASM";
-		meta.description = "ASM part of ElConQore";
+		meta.modId = EQReference.MOD_ID;
+		meta.name = EQReference.NAME;
 		meta.version = EQReference.VERSION;
 		meta.authorList = Arrays.asList("ElConquistador");
+		meta.description = "Core mod for all mods made by ElConquistador";
+		meta.url = "https://github.com/ItsMeElConquistador/ElConQore";
 	}
 	
 	@Override

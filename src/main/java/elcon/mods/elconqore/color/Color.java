@@ -7,23 +7,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class Color {
 
-	public static final String TEXT_COLOR_PREFIX_BLACK = "\u00a70";
-	public static final String TEXT_COLOR_PREFIX_DARK_BLUE = "\u00a71";
-	public static final String TEXT_COLOR_PREFIX_DARK_GREEN = "\u00a72";
-	public static final String TEXT_COLOR_PREFIX_DARK_AQUA = "\u00a73";
-	public static final String TEXT_COLOR_PREFIX_DARK_RED = "\u00a74";
-	public static final String TEXT_COLOR_PREFIX_PURPLE = "\u00a75";
-	public static final String TEXT_COLOR_PREFIX_GOLD = "\u00a76";
-	public static final String TEXT_COLOR_PREFIX_GRAY = "\u00a77";
-	public static final String TEXT_COLOR_PREFIX_DARK_GRAY = "\u00a78";
-	public static final String TEXT_COLOR_PREFIX_BLUE = "\u00a79";
-	public static final String TEXT_COLOR_PREFIX_GREEN = "\u00a7a";
-	public static final String TEXT_COLOR_PREFIX_AQUA = "\u00a7b";
-	public static final String TEXT_COLOR_PREFIX_RED = "\u00a7c";
-	public static final String TEXT_COLOR_PREFIX_LIGHT_PURPLE = "\u00a7d";
-	public static final String TEXT_COLOR_PREFIX_YELLOW = "\u00a7e";
-	public static final String TEXT_COLOR_PREFIX_WHITE = "\u00a7f";
-
 	public static final int TEXT_COLOR_BLACK = 0x000000;
 	public static final int TEXT_COLOR_DARK_BLUE = 0x0000AA;
 	public static final int TEXT_COLOR_DARK_GREEN = 0x00AA00;
