@@ -69,7 +69,7 @@ public class EQLoadingPlugin implements IFMLLoadingPlugin, IFMLCallHook {
 
 	@Override
 	public Void call() throws Exception {
-		EQAccessTransformer.addTransformerMap("elconcore_at.cfg");
+		EQAccessTransformer.addTransformerMap("elconqore_at.cfg");
 		scanElConQoreMods();
 		return null;
 	}

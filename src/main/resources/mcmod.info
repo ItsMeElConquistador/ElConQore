@@ -1,8 +1,8 @@
 [
 {
-  "modid": "ElConCore",
-  "name": "ElConCore",
-  "description": "ElConCore is a library made by ElConquistador, which adds commonly used functions",
+  "modid": "ElConQore",
+  "name": "ElConQore",
+  "description": "ElConQore is a library made by ElConquistador, which adds commonly used functions",
   "version": "${version}",
   "url": "",
   "updateUrl": "",

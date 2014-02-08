@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+FMLCorePlugin: elcon.mods.elconqore.asm.EQLoadingPlugin

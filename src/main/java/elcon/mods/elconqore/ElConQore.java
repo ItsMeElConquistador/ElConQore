@@ -3,6 +3,9 @@ package elcon.mods.elconqore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -10,7 +13,8 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 @Mod(modid = EQReference.MOD_ID, name = EQReference.NAME, version = EQReference.VERSION, acceptedMinecraftVersions = EQReference.MC_VERSION, dependencies = EQReference.DEPENDENCIES)
 public class ElConQore {
@@ -23,21 +27,48 @@ public class ElConQore {
 	
 	public static Logger log = LogManager.getLogger(EQReference.MOD_ID);
 	
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		EQMod mod = new EQMod(this, EQReference.VERSION_URL);
-		mod.addConfig("config", new EQConfig(event.getSuggestedConfigurationFile()));
+	public ElConQore() {
+		if(instance == null) {
+			instance = this;
+		}
+		if(proxy == null) {
+			proxy = FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? new EQClientProxy() : new EQCommonProxy();
+		}
 	}
 	
 	@EventHandler
-	public void init(FMLInitializationEvent event) {
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+	@Subscribe
+	public void preInit(FMLPreInitializationEvent event) {
+		new EQMod(this, EQReference.VERSION_URL, new EQConfig(event.getSuggestedConfigurationFile()), event.getSourceFile());
+	}
+	
+	@EventHandler
+	@Subscribe
+	public void init(FMLInitializationEvent event) {		
+		//load languages
+		LanguageManager.setLoaded(false);
+		LanguageManager.load();
+		addElConQoreLocalizations();
+		
+		//excecute version check
+		EQVersion.execute();
 		
 		proxy.registerRenderingInformation();
 	}
 	
 	@EventHandler
+	@Subscribe
 	public void postInit(FMLPostInitializationEvent event) {
 		
+	}
+	
+	private void addElConQoreLocalizations() {
+		LanguageManager.setLocatization("en_US", "elconqore.version.init_log_message", "Initializing remote version check against remote version authority, located at");
+		LanguageManager.setLocatization("en_US", "elconqore.version.uninitialized", "Remote version check failed to initialize properly");
+		LanguageManager.setLocatization("en_US", "elconqore.version.current", "Currently using the most up to date version (@REMOTE_MOD_VERSION@) of @MOD_NAME@ for @MINECRAFT_VERSION@");
+		LanguageManager.setLocatization("en_US", "elconqore.version.outdated", "A new @MOD_NAME@ version exists (@REMOTE_MOD_VERSION@) for @MINECRAFT_VERSION@. Get it here: @MOD_UPDATE_LOCATION@");
+		LanguageManager.setLocatization("en_US", "elconqore.version.general_error", "Error while connecting to remote version authority file; trying again");
+		LanguageManager.setLocatization("en_US", "elconqore.version.final_error", "Version check stopping after three unsuccessful connection attempts");
+		LanguageManager.setLocatization("en_US", "elconqore.version.mc_version_not_found", "Unable to find a version of @MOD_NAME@ for @MINECRAFT_VERSION@ in the remote version authority");
 	}
 }

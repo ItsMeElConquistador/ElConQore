@@ -35,6 +35,7 @@ public class EQAccessTransformer extends AccessTransformer {
 			parentMapFile.setAccessible(true);
 			parentMapFile.invoke(this, mapFile);
 		} catch(Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}

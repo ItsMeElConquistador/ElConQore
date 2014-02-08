@@ -1,5 +1,7 @@
 package elcon.mods.elconqore;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import cpw.mods.fml.common.Mod;
@@ -9,18 +11,33 @@ public class EQMod {
 	public static HashMap<String, EQMod> mods = new HashMap<String, EQMod>();
 	
 	public Mod mod;
-	public HashMap<String, EQConfig> configs = new HashMap<String, EQConfig>();
 	public String versionURL;
+	public EQConfig config;
+	public HashMap<String, EQConfig> configs = new HashMap<String, EQConfig>();
+	public File sourceFile;
 	
-	public EQMod(Mod mod, String versionURL) {
+	public ArrayList<String> localizationURLs = new ArrayList<String>();
+	
+	public byte versionResult;
+	public boolean versionMessage = false;
+	public String remoteVersion;
+	public String remoteUpdateLocation;
+	
+	public EQMod(Mod mod, String versionURL, EQConfig config, File sourceFile) {
 		this.mod = mod;
 		this.versionURL = versionURL;
+		this.config = config;
+		this.sourceFile = sourceFile;
+		
+		config.load();
+		config.save();
+		
 		mods.put(mod.modid(), this);
 	}
 	
-	public EQMod(Object mod, String versionURL) {
-		if(mod instanceof Mod) {
-			this.mod = (Mod) mod;
+	public EQMod(Object mod, String versionURL, EQConfig config, File sourceFile) {
+		if(mod.getClass().getAnnotation(Mod.class) != null) {
+			this.mod = mod.getClass().getAnnotation(Mod.class);
 			this.versionURL = versionURL;
 			mods.put(this.mod.modid(), this);
 		} else {
@@ -43,12 +60,14 @@ public class EQMod {
 	}
 	
 	public void loadConfigs() {
+		config.load();
 		for(EQConfig config : configs.values()) {
 			config.load();
 		}
 	}
 	
 	public void saveConfigs() {
+		config.save();
 		for(EQConfig config : configs.values()) {
 			config.save();
 		}
