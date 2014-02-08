@@ -1,5 +1,8 @@
 package elcon.mods.elconqore;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -17,9 +20,12 @@ public class ElConQore {
 	@SidedProxy(clientSide = EQReference.CLIENT_PROXY_CLASS, serverSide = EQReference.SERVER_PROXY_CLASS)
 	public static EQCommonProxy proxy;
 	
+	public static Logger log = LogManager.getLogger(EQReference.MOD_ID);
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		
+		EQMod mod = new EQMod(this, EQReference.VERSION_URL);
+		mod.addConfig("config", new EQConfig(event.getSuggestedConfigurationFile()));
 	}
 	
 	@EventHandler

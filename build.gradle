@@ -56,9 +56,11 @@ processResources {
 
 task release(type: Copy) {
 	from project.tasks.jar.destinationDir
-	into project.file(config.release_location.replace('{MC}', config.minecraft_version).replace('{MODVER}', config.mod_version).replace('{BUILD}', "${System.getenv().BUILD_NUMBER}"))
-	
-	eachFile { file ->
-		logger.ino "copying ${file}"
-	}
+	into project.file(config.release_location.replace('{NAME}', config.mod_name).replace('{MC}', config.minecraft_version).replace('{MODVER}', config.mod_version).replace('{BUILD}', "${System.getenv().BUILD_NUMBER}"))
 }
+
+task jenkins(type: Copy) {
+	from project.tasks.jar.destinationDir
+	into project.file(config.jenkins_location.replace('{NAME}', config.mod_name).replace('{MC}', config.minecraft_version).replace('{MODVER}', config.mod_version).replace('{BUILD}', "${System.getenv().BUILD_NUMBER}"))
+}
+
