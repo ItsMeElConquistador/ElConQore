@@ -60,7 +60,7 @@ task release(type: Copy) {
 }
 
 task cleanJenkins(type: Delete) {
-	delete fileTree(dir: "packages")
+	delete 'packages'
 }
 
 task jenkins(type: Copy) {
