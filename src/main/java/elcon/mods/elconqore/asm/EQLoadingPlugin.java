@@ -40,7 +40,8 @@ public class EQLoadingPlugin implements IFMLLoadingPlugin, IFMLCallHook {
 	@Override
 	public String[] getASMTransformerClass() {
 		return new String[]{
-			"elcon.mods.elconqore.asm.EQInstanceTransformer"
+			"elcon.mods.elconqore.asm.EQInstanceTransformer",
+			"elcon.mods.elconqore.asm.EQHookTransformer"
 		};
 	}
 
@@ -70,6 +71,7 @@ public class EQLoadingPlugin implements IFMLLoadingPlugin, IFMLCallHook {
 	@Override
 	public Void call() throws Exception {
 		EQAccessTransformer.addTransformerMap("elconqore_at.cfg");
+		EQHookTransformer.readHooksFile("elconqore_hooks.cfg");
 		scanElConQoreMods();
 		return null;
 	}
@@ -106,6 +108,13 @@ public class EQLoadingPlugin implements IFMLLoadingPlugin, IFMLCallHook {
 						File temp = extractTemp(jar, mapFile);
 						ElConQore.log.info("[AccessTransformer] Adding AccessTransformer file: " + mapFile);
 						EQAccessTransformer.addTransformerMap(temp.getPath());
+						temp.delete();
+					}
+					String hookFile = attr.getValue("Hooks");
+					if(hookFile != null) {
+						File temp = extractTemp(jar, hookFile);
+						ElConQore.log.info("[HookAPI] Adding hook file: " + hookFile);
+						EQHookTransformer.readHooksFile(temp.getPath());
 						temp.delete();
 					}
 				} finally {
