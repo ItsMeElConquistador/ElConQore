@@ -40,6 +40,7 @@ public class EQLoadingPlugin implements IFMLLoadingPlugin, IFMLCallHook {
 	@Override
 	public String[] getASMTransformerClass() {
 		return new String[]{
+			"elcon.mods.elconqore.asm.EQPatchTransformer",
 			"elcon.mods.elconqore.asm.EQInstanceTransformer",
 			"elcon.mods.elconqore.asm.EQHookTransformer"
 		};
