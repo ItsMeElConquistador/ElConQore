@@ -28,3 +28,6 @@
 /lib
 /releases
 /packages
+
+## ElConQore
+/patches
