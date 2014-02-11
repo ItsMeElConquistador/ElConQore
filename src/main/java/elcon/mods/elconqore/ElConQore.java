@@ -1,5 +1,7 @@
 package elcon.mods.elconqore;
 
+import net.minecraftforge.common.MinecraftForge;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,12 +23,12 @@ public class ElConQore {
 
 	@Instance(EQReference.MOD_ID)
 	public static ElConQore instance;
-	
+
 	@SidedProxy(clientSide = EQReference.CLIENT_PROXY_CLASS, serverSide = EQReference.SERVER_PROXY_CLASS)
 	public static EQCommonProxy proxy;
 	
 	public static Logger log = LogManager.getLogger(EQReference.MOD_ID);
-	
+
 	public ElConQore() {
 		if(instance == null) {
 			instance = this;
@@ -35,33 +37,36 @@ public class ElConQore {
 			proxy = FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? new EQClientProxy() : new EQCommonProxy();
 		}
 	}
-	
+
 	@EventHandler
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
 		new EQMod(this, EQReference.VERSION_URL, new EQConfig(event.getSuggestedConfigurationFile()), event.getSourceFile());
 	}
-	
+
 	@EventHandler
 	@Subscribe
-	public void init(FMLInitializationEvent event) {		
-		//load languages
+	public void init(FMLInitializationEvent event) {
+		// load languages
 		LanguageManager.setLoaded(false);
 		LanguageManager.load();
 		addElConQoreLocalizations();
-		
-		//excecute version check
+
+		// excecute version check
 		EQVersion.execute();
-		
+
+		// init event handler
+		MinecraftForge.EVENT_BUS.register(new EQEventHandler());
+
 		proxy.registerRenderingInformation();
 	}
-	
+
 	@EventHandler
 	@Subscribe
 	public void postInit(FMLPostInitializationEvent event) {
-		
+
 	}
-	
+
 	private void addElConQoreLocalizations() {
 		LanguageManager.setLocatization("en_US", "elconqore.version.init_log_message", "Initializing remote version check against remote version authority, located at");
 		LanguageManager.setLocatization("en_US", "elconqore.version.uninitialized", "Remote version check failed to initialize properly");
