@@ -17,6 +17,10 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import elcon.mods.elconqore.lang.LanguageManager;
+import elcon.mods.elconqore.network.EQCodec;
+import elcon.mods.elconqore.network.EQMessage;
+import elcon.mods.elconqore.network.EQPacketHandler;
+import elcon.mods.elconqore.network.EQPacketHandlerServer;
 
 @Mod(modid = EQReference.MOD_ID, name = EQReference.NAME, version = EQReference.VERSION, acceptedMinecraftVersions = EQReference.MC_VERSION, dependencies = EQReference.DEPENDENCIES)
 public class ElConQore {
@@ -26,7 +30,9 @@ public class ElConQore {
 
 	@SidedProxy(clientSide = EQReference.CLIENT_PROXY_CLASS, serverSide = EQReference.SERVER_PROXY_CLASS)
 	public static EQCommonProxy proxy;
-	
+
+	public static EQPacketHandler<EQMessage> packetHandler;
+
 	public static Logger log = LogManager.getLogger(EQReference.MOD_ID);
 
 	public ElConQore() {
@@ -57,6 +63,12 @@ public class ElConQore {
 
 		// init event handler
 		MinecraftForge.EVENT_BUS.register(new EQEventHandler());
+
+		// init packet handler
+		packetHandler = new EQPacketHandler<EQMessage>("ElConQore", new EQCodec());
+
+		// set server packet handler
+		ElConQore.packetHandler.setServerHandler(new EQPacketHandlerServer());
 
 		proxy.registerRenderingInformation();
 	}
