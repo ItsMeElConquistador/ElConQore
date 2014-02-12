@@ -1,15 +1,20 @@
 package elcon.mods.elconqore.metadata;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.elconqore.ElConQore;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.chunk.NibbleArray;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.elconqore.ElConQore;
 
 public class EQExtendedBlockStorage extends ExtendedBlockStorage {
 
+	//TODO: S21PacketChunkData.func_149269_a(Chunk, boolean, int)
+	//TODO: Chunk.fillChunk(byte[], int, int, boolean)
+	//TODO: AnvilChunkLoader.readChunkFromNBT(World, NBTTagCompound)
+	//TODO: AnvilChunkLoader.writeChunkToNBT(Chunk, World, NBTTagCompound)
+	
 	private int newBlockRefCount;
 	private int newTickRefCount;
 
