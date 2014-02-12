@@ -10,13 +10,19 @@ public class EQCodec extends FMLIndexedMessageToMessageCodec<EQMessage> {
 		addDiscriminator(0, EQMessage.class);
 	}
 	
+	public EQCodec(Class<? extends EQMessage>... messages) {
+		for(int i = 0; i < messages.length; i++) {
+			addDiscriminator(i, messages[i]);
+		}		
+	}
+	
 	@Override
 	public void encodeInto(ChannelHandlerContext ctx, EQMessage msg, ByteBuf target) throws Exception {
-		msg.encode(target);
+		msg.encodeTo(target);
 	}
 
 	@Override
 	public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, EQMessage msg) {
-		msg.decode(source);
+		msg.decodeFrom(source);
 	}
 }

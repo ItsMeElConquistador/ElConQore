@@ -10,6 +10,6 @@ public class EQPacketHandlerClient extends SimpleChannelInboundHandler<EQMessage
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, EQMessage msg) throws Exception {
-		
+		msg.handle();
 	}
 }

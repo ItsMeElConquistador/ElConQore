@@ -17,7 +17,7 @@ public class EQClientProxy extends EQCommonProxy {
 		// init event handler
 		MinecraftForge.EVENT_BUS.register(new EQEventHandlerClient());
 		
-		//set client packet handler
+		// init packet handler
 		ElConQore.packetHandler.setClientHandler(new EQPacketHandlerClient());
 	}
 }

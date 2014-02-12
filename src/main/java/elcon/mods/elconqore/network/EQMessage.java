@@ -4,7 +4,9 @@ import io.netty.buffer.ByteBuf;
 
 public abstract class EQMessage {
 
-	public abstract void encode(ByteBuf target);
+	public abstract void encodeTo(ByteBuf target);
 	
-	public abstract void decode(ByteBuf source);
+	public abstract void decodeFrom(ByteBuf source);
+	
+	public abstract void handle();
 }

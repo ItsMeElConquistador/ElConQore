@@ -66,8 +66,6 @@ public class ElConQore {
 
 		// init packet handler
 		packetHandler = new EQPacketHandler<EQMessage>("ElConQore", new EQCodec());
-
-		// set server packet handler
 		ElConQore.packetHandler.setServerHandler(new EQPacketHandlerServer());
 
 		proxy.registerRenderingInformation();
