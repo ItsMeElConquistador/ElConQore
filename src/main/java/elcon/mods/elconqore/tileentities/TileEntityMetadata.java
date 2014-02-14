@@ -3,7 +3,6 @@ package elcon.mods.elconqore.tileentities;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -11,70 +10,83 @@ import elcon.mods.elconqore.EQUtilClient;
 import elcon.mods.elconqore.ElConQore;
 import elcon.mods.elconqore.network.EQMessageTile;
 
-public class TileEntityOwned extends TileEntity {
+public class TileEntityMetadata extends TileEntityExtended {
 
-	public static class MessageTileOwned extends EQMessageTile {
-
-		public String owner;
+	public static class MessageTileMetadata extends EQMessageTile {
 		
-		public MessageTileOwned(int x, int y, int z, String owner) {
+		public byte metadata;
+		
+		public MessageTileMetadata(int x, int y, int z, byte metadata) {
 			super(x, y, z);
+			this.metadata = metadata;
 		}
 		
 		@Override
 		public void encodeTo(ByteBuf target) {
 			super.encodeTo(target);
-			writeString(target, owner);
+			target.writeByte(metadata);
 		}
 		
 		@Override
 		public void decodeFrom(ByteBuf source) {
 			super.decodeFrom(source);
-			owner = readString(source);
+			metadata = source.readByte();
 		}
 		
 		@Override
 		@SideOnly(Side.CLIENT)
 		public void handle() {
 			World world = EQUtilClient.getWorld();
-			TileEntityOwned tile = (TileEntityOwned) world.getTileEntity(x, y, z);
+			TileEntityMetadata tile = (TileEntityMetadata) world.getTileEntity(x, y, z);
 			if(tile == null) {
-				tile = new TileEntityOwned();
+				tile = new TileEntityMetadata();
 				world.setTileEntity(x, y, z, tile);
 			}
-			tile.setOwner(owner);
+			tile.setTileMetadata(metadata);
 			world.markBlockForUpdate(x, y, z);
 		}
 	}
 	
-	private String owner = "[Minecraft]";
+	private byte metadata = 0;
 	
-	public String getOwner() {
-		return owner;
+	public TileEntityMetadata() {
 	}
 	
-	public boolean isOwner(String name) {
-		return owner.equals(name);
+	public TileEntityMetadata(byte metadata) {
+		setTileMetadata(metadata);
 	}
 	
-	public void setOwner(String owner) {
-		this.owner = owner;
+	public TileEntityMetadata(Byte metadata) {
+		this(metadata.byteValue());
+	}
+	
+	@Override
+	public boolean canUpdate() {
+		return false;
 	}
 	
 	@Override
 	public Packet getDescriptionPacket() {
-		return ElConQore.packetHandler.getPacketToClient(new MessageTileOwned(xCoord, yCoord, zCoord, owner));
+		return ElConQore.packetHandler.getPacketToClient(new MessageTileMetadata(xCoord, yCoord, zCoord, getTileMetadata()));
+	}
+	
+	public byte getTileMetadata() {
+		return metadata;
+	}
+	
+	public void setTileMetadata(byte metadata) {
+		this.metadata = metadata;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		owner = nbt.getString("Owner");
+		metadata = nbt.getByte("Metadata");
 	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setString("Owner", owner);
+		nbt.setByte("Metadata", metadata);
 	}
 }

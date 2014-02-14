@@ -21,6 +21,9 @@ import elcon.mods.elconqore.network.EQCodec;
 import elcon.mods.elconqore.network.EQMessage;
 import elcon.mods.elconqore.network.EQPacketHandler;
 import elcon.mods.elconqore.network.EQPacketHandlerServer;
+import elcon.mods.elconqore.tileentities.TileEntityMetadata.MessageTileMetadata;
+import elcon.mods.elconqore.tileentities.TileEntityNBT.MessageTileNBT;
+import elcon.mods.elconqore.tileentities.TileEntityOwned.MessageTileOwned;
 
 @Mod(modid = EQReference.MOD_ID, name = EQReference.NAME, version = EQReference.VERSION, acceptedMinecraftVersions = EQReference.MC_VERSION, dependencies = EQReference.DEPENDENCIES)
 public class ElConQore {
@@ -50,6 +53,7 @@ public class ElConQore {
 		new EQMod(this, EQReference.VERSION_URL, new EQConfig(event.getSuggestedConfigurationFile()), event.getSourceFile());
 	}
 
+	@SuppressWarnings("unchecked")
 	@EventHandler
 	@Subscribe
 	public void init(FMLInitializationEvent event) {
@@ -65,7 +69,7 @@ public class ElConQore {
 		MinecraftForge.EVENT_BUS.register(new EQEventHandler());
 
 		// init packet handler
-		packetHandler = new EQPacketHandler<EQMessage>("ElConQore", new EQCodec());
+		packetHandler = new EQPacketHandler<EQMessage>("ElConQore", new EQCodec(MessageTileMetadata.class, MessageTileNBT.class, MessageTileOwned.class));
 		ElConQore.packetHandler.setServerHandler(new EQPacketHandlerServer());
 
 		proxy.registerRenderingInformation();

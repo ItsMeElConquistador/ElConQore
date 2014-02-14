@@ -1,6 +1,7 @@
 package elcon.mods.elconqore;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.util.MovingObjectPosition;
@@ -59,5 +60,9 @@ public class EQUtilClient {
 		}
 		effectRenderer.addEffect((new EntityDiggingFX(world, xx, yy, zz, 0.0D, 0.0D, 0.0D, block, metadata)).applyColourMultiplier(x, y, z).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
 		return true;
+	}
+
+	public static World getWorld() {
+		return Minecraft.getMinecraft().theWorld;
 	}
 }

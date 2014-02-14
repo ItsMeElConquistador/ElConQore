@@ -4,6 +4,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.EnumMap;
 
+import net.minecraft.network.Packet;
+
 import com.google.common.collect.Maps;
 
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
@@ -56,12 +58,12 @@ public class EQPacketHandler<T> {
         handlers.put(Side.SERVER, handler);
 	}
 	
-	public void getPacketToClient(T message) {
-		channels.get(Side.SERVER).generatePacketFrom(message);
+	public Packet getPacketToClient(T message) {
+		return channels.get(Side.SERVER).generatePacketFrom(message);
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void getPacketToServer(T message) {
-		channels.get(Side.CLIENT).generatePacketFrom(message);
+	public Packet getPacketToServer(T message) {
+		return channels.get(Side.CLIENT).generatePacketFrom(message);
 	}
 }
