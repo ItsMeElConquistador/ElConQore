@@ -87,9 +87,9 @@ public class MBStructurePattern {
 		case EAST:
 			return new int[]{offsetZ, offsetY, offsetX};
 		case SOUTH:
-			return new int[]{width - offsetX, offsetY, depth - offsetZ};
+			return new int[]{width - offsetX - 1, offsetY, depth - offsetZ - 1};
 		case WEST:
-			return new int[]{width - offsetZ, offsetY, depth - offsetX};
+			return new int[]{width - offsetZ - 1, offsetY, depth - offsetX - 1};
 		}
 	}
 	
@@ -101,9 +101,9 @@ public class MBStructurePattern {
 		case EAST:
 			return structure[z][y][x];
 		case SOUTH:
-			return structure[width - x][y][depth - z];
+			return structure[width - x - 1][y][depth - z - 1];
 		case WEST:
-			return structure[width - z][y][depth - x];
+			return structure[width - z - 1][y][depth - x - 1];
 		}
 	}
 }

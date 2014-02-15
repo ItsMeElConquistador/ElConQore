@@ -10,8 +10,10 @@ public class MBStructureTest extends MBStructure {
 
 	public MBStructureTest() {
 		super("test");
+		metaOnValid.put('B', 256);
 		for(int i = 3; i < 6; i++) {
-			MBStructurePattern pattern = new MBStructurePattern(i + "x" + i, i, 3, i);
+			int halfSize = (int) Math.floor(i / 2.0D);
+			MBStructurePattern pattern = new MBStructurePattern(i + "x" + i, i, 3, i).setOffsets(-halfSize, 0, -halfSize);
 			String patternString = "";
 			for(int y = 0; y < 3; y++) {
 				for(int x = 0; x < i; x++) {
@@ -21,7 +23,7 @@ public class MBStructureTest extends MBStructure {
 				}
 			}
 			pattern.setStructure(patternString);
-			pattern.structure[i / 2][1][0] = 'B';
+			pattern.structure[halfSize][1][0] = 'B';
 			addPattern(pattern);
 		}
 	}

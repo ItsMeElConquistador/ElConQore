@@ -5,6 +5,7 @@ import java.util.HashMap;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+import elcon.mods.elconqore.EQUtil;
 import elcon.mods.elconqore.tileentities.TileEntityStructure;
 
 public abstract class MBStructure {
@@ -47,7 +48,7 @@ public abstract class MBStructure {
 					tile.structure = name;
 					tile.structurePattern = pattern.name;
 					tile.rotation = rotations[i];
-					System.out.println("VALID");
+					System.out.println("VALID at " + EQUtil.coordsToString(tile));
 					if(!tile.isMaster()) {
 						tile.setMaster(true);
 						tile.markStructureBlocks();
@@ -56,7 +57,7 @@ public abstract class MBStructure {
 				}
 			}
 		}
-		System.out.println("INVALID");
+		System.out.println("INVALID at " + EQUtil.coordsToString(tile));
 		if(tile.isMaster()) {
 			tile.resetStructureBlocks();
 		}

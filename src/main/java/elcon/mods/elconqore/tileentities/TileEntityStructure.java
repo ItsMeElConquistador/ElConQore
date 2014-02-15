@@ -114,7 +114,17 @@ public class TileEntityStructure extends TileEntityExtended {
 	
 	public void validateStructure() {
 		if(structure.length() > 0) {
-			System.out.println("VALIDATE THIS");
+			char[][][] chars = MBStructureRegistry.getStructurePattern(structure, "4x4").structure;
+			for(int j = 0; j < 3; j++) {
+				System.out.println();
+				for(int i = 0; i < 4; i++) {
+					System.out.print(" ");
+					for(int k = 0; k < 4; k++) {
+						System.out.print(chars[i][j][k]);
+					}
+				}
+			}
+			System.out.println();
 			MBStructureRegistry.getStructure(structure).validateStructure(this);
 		}
 	}
