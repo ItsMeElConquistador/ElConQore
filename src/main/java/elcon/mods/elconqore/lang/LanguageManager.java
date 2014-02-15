@@ -62,7 +62,7 @@ public class LanguageManager {
 							while(entries.hasMoreElements()) {
 								JarEntry jarEntry = (JarEntry) entries.nextElement();
 								if(jarEntry.getName().contains("assets/" + modName.toLowerCase() + "/lang/")) {
-									File f = new File(languageDirectory, jarEntry.getName());
+									File f = new File(languageDirectory, jarEntry.getName().replace("assets/" + modName.toLowerCase() + "/lang/", ""));
 									if(jarEntry.isDirectory()) {
 										f.mkdirs();
 										continue;

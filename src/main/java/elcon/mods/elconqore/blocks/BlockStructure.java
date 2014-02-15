@@ -18,7 +18,7 @@ public abstract class BlockStructure extends BlockExtendedContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileEntityStructure();
+		return new TileEntityStructure(getStructureName(), this);
 	}
 
 	@Override

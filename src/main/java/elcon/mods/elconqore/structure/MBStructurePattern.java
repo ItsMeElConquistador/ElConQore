@@ -62,6 +62,9 @@ public class MBStructurePattern {
 	}
 	
 	public int[] getDimensions(ForgeDirection direction) {
+		if(direction == null) {
+			return new int[]{width, height, depth};
+		}
 		switch(direction) {
 		default:
 		case NORTH:
@@ -74,6 +77,9 @@ public class MBStructurePattern {
 	}
 	
 	public int[] getOffsets(ForgeDirection direction) {
+		if(direction == null) {
+			return new int[]{offsetX, offsetY, offsetZ};
+		}
 		switch(direction) {
 		default:
 		case NORTH:

@@ -47,6 +47,7 @@ public abstract class MBStructure {
 					tile.structure = name;
 					tile.structurePattern = pattern.name;
 					tile.rotation = rotations[i];
+					System.out.println("VALID");
 					if(!tile.isMaster()) {
 						tile.setMaster(true);
 						tile.markStructureBlocks();
@@ -55,6 +56,7 @@ public abstract class MBStructure {
 				}
 			}
 		}
+		System.out.println("INVALID");
 		if(tile.isMaster()) {
 			tile.resetStructureBlocks();
 		}

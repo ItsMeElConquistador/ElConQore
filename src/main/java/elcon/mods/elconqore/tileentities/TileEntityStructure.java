@@ -22,6 +22,9 @@ public class TileEntityStructure extends TileEntityExtended {
 
 		public boolean hasStructure;
 		
+		public MessageTileStructure() {
+		}
+		
 		public MessageTileStructure(int x, int y, int z, boolean hasStructure) {
 			super(x, y, z);
 			this.hasStructure = hasStructure;
@@ -111,6 +114,7 @@ public class TileEntityStructure extends TileEntityExtended {
 	
 	public void validateStructure() {
 		if(structure.length() > 0) {
+			System.out.println("VALIDATE THIS");
 			MBStructureRegistry.getStructure(structure).validateStructure(this);
 		}
 	}
@@ -162,7 +166,11 @@ public class TileEntityStructure extends TileEntityExtended {
 		if(structurePattern != null && structurePattern.length() > 0) {
 			nbt.setString("StructurePattern", structurePattern);
 		}
-		nbt.setByte("Rotation", (byte) rotation.ordinal());
+		if(rotation != null) {
+			nbt.setByte("Rotation", (byte) rotation.ordinal());
+		} else {
+			nbt.setByte("Rotation", (byte) 0);
+		}
 		nbt.setBoolean("IsMaster", isMaster);
 		nbt.setInteger("MasterX", masterX);
 		nbt.setInteger("MasterY", masterY);

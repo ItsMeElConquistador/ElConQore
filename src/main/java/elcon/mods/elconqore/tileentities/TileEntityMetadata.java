@@ -14,9 +14,12 @@ public class TileEntityMetadata extends TileEntityExtended {
 
 	public static class MessageTileMetadata extends EQMessageTile {
 		
-		public byte metadata;
+		public int metadata;
 		
-		public MessageTileMetadata(int x, int y, int z, byte metadata) {
+		public MessageTileMetadata() {
+		}
+		
+		public MessageTileMetadata(int x, int y, int z, int metadata) {
 			super(x, y, z);
 			this.metadata = metadata;
 		}
@@ -30,7 +33,7 @@ public class TileEntityMetadata extends TileEntityExtended {
 		@Override
 		public void decodeFrom(ByteBuf source) {
 			super.decodeFrom(source);
-			metadata = source.readByte();
+			metadata = source.readUnsignedByte();
 		}
 		
 		@Override
@@ -47,7 +50,7 @@ public class TileEntityMetadata extends TileEntityExtended {
 		}
 	}
 	
-	private byte metadata = 0;
+	private int metadata = 0;
 	
 	public TileEntityMetadata() {
 	}
@@ -65,23 +68,26 @@ public class TileEntityMetadata extends TileEntityExtended {
 		return ElConQore.packetHandler.getPacketToClient(new MessageTileMetadata(xCoord, yCoord, zCoord, getTileMetadata()));
 	}
 	
-	public byte getTileMetadata() {
+	public int getTileMetadata() {
 		return metadata;
 	}
 	
-	public void setTileMetadata(byte metadata) {
+	public void setTileMetadata(int metadata) {
+		if(metadata >= 256) {
+			ElConQore.log.error(getBlockType().getUnlocalizedName() + " (" + getBlockType() + ") is using metadata >= 256, this will crash or derp!");
+		}
 		this.metadata = metadata;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		metadata = nbt.getByte("Metadata");
+		metadata = nbt.getInteger("Metadata");
 	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setByte("Metadata", metadata);
+		nbt.setInteger("Metadata", metadata);
 	}
 }

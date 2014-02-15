@@ -17,6 +17,9 @@ public class TileEntityOwned extends TileEntity {
 
 		public String owner;
 		
+		public MessageTileOwned() {
+		}
+		
 		public MessageTileOwned(int x, int y, int z, String owner) {
 			super(x, y, z);
 		}

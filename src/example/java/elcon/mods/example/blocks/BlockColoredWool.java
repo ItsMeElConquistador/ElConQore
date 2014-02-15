@@ -22,9 +22,8 @@ public class BlockColoredWool extends BlockExtendedMetadata {
 		super(Material.cloth);
 		setStepSound(Block.soundTypeCloth);
 		setCreativeTab(CreativeTabs.tabBlock);
-		int delta = 0xFFFFFF / 255;
 		for(int i = 0; i < 256; i++) {
-			colors[i] = delta * i;
+			colors[i] = i * 0xFFFF + i * 0xFF + i;
 		}
 	}
 	
@@ -35,8 +34,14 @@ public class BlockColoredWool extends BlockExtendedMetadata {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
+	public int getRenderColor(int meta) {
+		return colors[meta];
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
-		return colors[getMetadata(blockAccess, x, y, z)];
+		return getRenderColor(getMetadata(blockAccess, x, y, z));
 	}
 	
 	@Override

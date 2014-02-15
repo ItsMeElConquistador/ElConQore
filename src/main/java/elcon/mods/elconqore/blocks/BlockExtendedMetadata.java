@@ -46,19 +46,19 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 		return getUnlocalizedName();
 	}
 
-	public byte getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, float xx, float yy, float zz) {
-		return (byte) stack.getItemDamage();
+	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, float xx, float yy, float zz) {
+		return stack.getItemDamage();
 	}
 
-	public byte getDroppedMetadata(World world, int x, int y, int z, byte meta, int fortune) {
+	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
 		return meta;
 	}
 	
-	public boolean shouldDropItems(World world, int x, int y, int z, byte meta, EntityPlayer player, ItemStack stack) {
+	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
 		return true;
 	}
 
-	public byte getMetadata(IBlockAccess blockAccess, int x, int y, int z) {
+	public int getMetadata(IBlockAccess blockAccess, int x, int y, int z) {
 		TileEntity tile = blockAccess.getTileEntity(x, y, z);
 		if(tile instanceof TileEntityMetadata) {
 			return ((TileEntityMetadata) tile).getTileMetadata();
@@ -66,7 +66,7 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 		return 0;
 	}
 
-	public void setMetadata(World world, int x, int y, int z, byte meta) {
+	public void setMetadata(World world, int x, int y, int z, int meta) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 		if(tile instanceof TileEntityMetadata) {
 			((TileEntityMetadata) tile).setTileMetadata(meta);
@@ -122,7 +122,7 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 		for(int i = 0; i < count; i++) {
 			Item item = getItemDropped(metadata, world.rand, fortune);
 			if(item != null) {
-				ret.add(new ItemStack(item, 1, getDroppedMetadata(world, x, y, z, (byte) metadata, fortune)));
+				ret.add(new ItemStack(item, 1, getDroppedMetadata(world, x, y, z, metadata, fortune)));
 			}
 		}
 		return ret;

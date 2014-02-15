@@ -16,6 +16,9 @@ public class TileEntityNBT extends TileEntityExtended {
 
 		public NBTTagCompound nbt;
 		
+		public MessageTileNBT() {
+		}
+		
 		public MessageTileNBT(int x, int y, int z, NBTTagCompound nbt) {
 			super(x, y, z);
 			this.nbt = nbt;

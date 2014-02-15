@@ -16,6 +16,8 @@ public class ItemBlockExtendedMetadata extends ItemBlock {
 
 	public ItemBlockExtendedMetadata(Block block) {
 		super(block);
+		setMaxDamage(0);
+		setHasSubtypes(true);
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class ItemBlockExtendedMetadata extends ItemBlock {
 
 	@Override
 	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-		byte placedMeta = ((BlockExtendedMetadata) field_150939_a).getPlacedMetadata(player, stack, world, x, y, z, side, hitX, hitY, hitZ);
+		int placedMeta = ((BlockExtendedMetadata) field_150939_a).getPlacedMetadata(player, stack, world, x, y, z, side, hitX, hitY, hitZ);
 		if(!world.setBlock(x, y, z, field_150939_a, metadata, 3)) {
 			return false;
 		}

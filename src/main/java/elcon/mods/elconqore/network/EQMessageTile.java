@@ -10,6 +10,9 @@ public abstract class EQMessageTile extends EQMessage {
 	public int y;
 	public int z;
 	
+	public EQMessageTile() {
+	}
+	
 	public EQMessageTile(int x, int y, int z) {
 		this.x = x;
 		this.y = y;

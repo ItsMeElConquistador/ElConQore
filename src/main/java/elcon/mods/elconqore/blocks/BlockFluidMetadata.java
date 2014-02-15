@@ -92,7 +92,7 @@ public class BlockFluidMetadata extends BlockExtendedMetadata implements IFluidB
 		return this;
 	}
 
-	public Fluid getFluid(byte meta) {
+	public Fluid getFluid(int meta) {
 		return fluidList[meta];
 	}
 
@@ -392,7 +392,7 @@ public class BlockFluidMetadata extends BlockExtendedMetadata implements IFluidB
 
 	@Override
 	public Fluid getFluid() {
-		return getFluid((byte) 0);
+		return getFluid(0);
 	}
 
 	@Override
@@ -407,7 +407,7 @@ public class BlockFluidMetadata extends BlockExtendedMetadata implements IFluidB
 
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random rand) {
-		byte fluid = getMetadata(world, x, y, z);
+		int fluid = getMetadata(world, x, y, z);
 		int quantaRemaining = quantaPerBlock - world.getBlockMetadata(x, y, z);
 		int expQuanta = -101;
 		if(quantaRemaining < quantaPerBlock) {
@@ -554,7 +554,7 @@ public class BlockFluidMetadata extends BlockExtendedMetadata implements IFluidB
 		return cost;
 	}
 
-	public void flowIntoBlock(World world, int x, int y, int z, int otherX, int otherY, int otherZ, int meta, byte fluid) {
+	public void flowIntoBlock(World world, int x, int y, int z, int otherX, int otherY, int otherZ, int meta, int fluid) {
 		if(meta < 0) {
 			return;
 		}
@@ -618,7 +618,7 @@ public class BlockFluidMetadata extends BlockExtendedMetadata implements IFluidB
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return getFluid((byte) meta).getFlowingIcon();
+		return getFluid(meta).getFlowingIcon();
 	}
 	
 	@Override
