@@ -55,7 +55,7 @@ public abstract class BlockStructure extends BlockExtendedContainer {
 		if(!world.isRemote) {
 			TileEntity tile = world.getTileEntity(x, y, z);
 			if(tile instanceof TileEntityStructure) {
-				//((TileEntityStructure) tile).validateStructure();
+				((TileEntityStructure) tile).validateStructure();
 			}
 		}
 	}
