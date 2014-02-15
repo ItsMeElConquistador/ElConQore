@@ -3,14 +3,13 @@ package elcon.mods.elconqore.asm;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
-import java.util.List;
 
 import cpw.mods.fml.common.asm.transformers.AccessTransformer;
 
 public class EQAccessTransformer extends AccessTransformer {
 
 	private static EQAccessTransformer instance;
-	private static List<String> mapFileList = new LinkedList<String>();
+	private static LinkedList<String> mapFileList = new LinkedList<String>();
 	
 	public EQAccessTransformer() throws IOException {
 		super();
@@ -18,7 +17,6 @@ public class EQAccessTransformer extends AccessTransformer {
 		for(String file : mapFileList) {
 			readMapFile(file);
 		}
-		mapFileList = null;
 	}
 
 	public static void addTransformerMap(String mapFile) {

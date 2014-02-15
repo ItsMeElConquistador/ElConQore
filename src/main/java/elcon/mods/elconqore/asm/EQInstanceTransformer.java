@@ -52,12 +52,7 @@ public class EQInstanceTransformer implements IClassTransformer {
 			instanceTransforms.add(new InstanceTransform("net.minecraft.client.multiplayer.PlayerControllerMP", "biy", "net.minecraft.client.entity.EntityClientPlayerMP", "bje", "elcon.mods.elconqore.player.PlayerCoreClient", 3));
 			instanceTransforms.add(new InstanceTransform("net.minecraft.server.management.ServerConfigurationManager", "ld", "net.minecraft.entity.player.EntityPlayerMP", "mn", "elcon.mods.elconqore.player.PlayerCoreServer", 0));
 			instanceTransforms.add(new InstanceTransform("net.minecraft.client.renderer.entity.RenderManager", "bnf", "net.minecraft.client.renderer.entity.RenderPlayer", "boh", "elcon.mods.elconqore.player.PlayerCoreRender", 3));
-
-			// ExtendedMetadata
-			instanceTransforms.add(new InstanceTransform("net.minecraft.world.chunk.Chunk", "aoj", "net.minecraft.world.chunk.storage.ExtendedBlockStorage", "aol", "elcon.mods.elconqore.metadata.EQExtendedBlockStorage", 3));
-			instanceTransforms.add(new InstanceTransform("net.minecraft.world.chunk.storage.AnvilChunkLoader", "aow", "net.minecraft.world.chunk.storage.ExtendedBlockStorage", "aol", "elcon.mods.elconqore.metadata.EQExtendedBlockStorage", 3));
-			instanceTransforms.add(new InstanceTransform("net.minecraft.world.gen.ChunkProviderFlat", "apg", "net.minecraft.world.chunk.storage.ExtendedBlockStorage", "aol", "elcon.mods.elconqore.metadata.EQExtendedBlockStorage", 3));
-
+			
 			ElConQore.log.info("[InstanceTransformer] Registered instance transforms");
 		}
 	}

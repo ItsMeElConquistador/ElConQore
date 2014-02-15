@@ -1,0 +1,21 @@
+[
+{
+  "modid": "ExampleMod",
+  "name": "ExampleMod",
+  "description": "ExampleMod used to demonstrate ElConQore",
+  "version": "1.0.0",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "ElConquistador"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  	"ElConQore"
+  ]
+}
+]

@@ -41,26 +41,12 @@ public abstract class MBStructure {
 		MBStructureState state = MBStructureState.UNKOWN;
 		ForgeDirection[] rotations = new ForgeDirection[]{ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.WEST, ForgeDirection.SOUTH};
 		for(MBStructurePattern pattern : patterns.values()) {
-			if(pattern.width != pattern.depth) {
-				for(int i = 0; i < rotations.length; i++) {
-					state = tile.determineMasterState(pattern, rotations[i]);
-					if(state == MBStructureState.VALID) {
-						tile.structure = name;
-						tile.structurePattern = pattern.name;
-						tile.rotation = rotations[i];
-						if(!tile.isMaster()) {
-							tile.setMaster(true);
-							tile.markStructureBlocks();
-						}
-						return;
-					}
-				}
-			} else {
-				state = tile.determineMasterState(pattern, ForgeDirection.NORTH);
+			for(int i = 0; i < rotations.length; i++) {
+				state = tile.determineMasterState(pattern, rotations[i]);
 				if(state == MBStructureState.VALID) {
 					tile.structure = name;
 					tile.structurePattern = pattern.name;
-					tile.rotation = ForgeDirection.NORTH;
+					tile.rotation = rotations[i];
 					if(!tile.isMaster()) {
 						tile.setMaster(true);
 						tile.markStructureBlocks();

@@ -3,6 +3,7 @@ package elcon.mods.elconqore.asm;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,8 +41,13 @@ public class EQHookTransformer implements IClassTransformer, Opcodes {
 	}
 	
 	public static Multimap<String, Hook> hooks = ArrayListMultimap.create();
+	public static ArrayList<String> hookFiles = new ArrayList<String>();
 	
 	public static void readHooksFile(String hooksFile) {
+		if(hookFiles.contains(hooksFile)) {
+			return;
+		}
+		hookFiles.add(hooksFile);
 		try {
 			File file = new File(hooksFile);
 			URL hooksResource;
@@ -104,7 +110,7 @@ public class EQHookTransformer implements IClassTransformer, Opcodes {
 			for(MethodNode method : classNode.methods) {
 				if((method.name.equals(hook.name) && method.desc.equals(hook.desc))) {
 					method.instructions.insert(createInstructionList(hook));					
-					ElConQore.log.info("[HookAPI] Added hook: " + hook.name + " " + hook.desc);
+					ElConQore.log.info("[HookAPI] Added hook: " + hook.name + " " + hook.desc + " to " + transformedName);
 				}
 			}
 		}
