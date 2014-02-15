@@ -29,6 +29,8 @@ import elcon.mods.elconqore.tileentities.TileEntityNBT;
 import elcon.mods.elconqore.tileentities.TileEntityNBT.MessageTileNBT;
 import elcon.mods.elconqore.tileentities.TileEntityOwned;
 import elcon.mods.elconqore.tileentities.TileEntityOwned.MessageTileOwned;
+import elcon.mods.elconqore.tileentities.TileEntityStructure;
+import elcon.mods.elconqore.tileentities.TileEntityStructure.MessageTileStructure;
 
 @Mod(modid = EQReference.MOD_ID, name = EQReference.NAME, version = EQReference.VERSION, acceptedMinecraftVersions = EQReference.MC_VERSION, dependencies = EQReference.DEPENDENCIES)
 public class ElConQore {
@@ -62,6 +64,7 @@ public class ElConQore {
 		GameRegistry.registerTileEntity(TileEntityMetadata.class, "TileMetadata");
 		GameRegistry.registerTileEntity(TileEntityNBT.class, "TileNBT");
 		GameRegistry.registerTileEntity(TileEntityOwned.class, "TileOwned");
+		GameRegistry.registerTileEntity(TileEntityStructure.class, "TileStructure");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -80,7 +83,7 @@ public class ElConQore {
 		MinecraftForge.EVENT_BUS.register(new EQEventHandler());
 
 		// init packet handler
-		packetHandler = new EQPacketHandler<EQMessage>("ElConQore", new EQCodec(MessageTileMetadata.class, MessageTileNBT.class, MessageTileOwned.class));
+		packetHandler = new EQPacketHandler<EQMessage>("ElConQore", new EQCodec(MessageTileMetadata.class, MessageTileNBT.class, MessageTileOwned.class, MessageTileStructure.class));
 		ElConQore.packetHandler.setServerHandler(new EQPacketHandlerServer());
 
 		proxy.registerRenderingInformation();

@@ -61,11 +61,6 @@ public class TileEntityMetadata extends TileEntityExtended {
 	}
 	
 	@Override
-	public boolean canUpdate() {
-		return false;
-	}
-	
-	@Override
 	public Packet getDescriptionPacket() {
 		return ElConQore.packetHandler.getPacketToClient(new MessageTileMetadata(xCoord, yCoord, zCoord, getTileMetadata()));
 	}

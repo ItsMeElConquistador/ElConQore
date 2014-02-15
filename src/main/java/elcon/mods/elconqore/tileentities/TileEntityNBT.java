@@ -50,11 +50,6 @@ public class TileEntityNBT extends TileEntityExtended {
 	private NBTTagCompound nbt;
 	
 	@Override
-	public boolean canUpdate() {
-		return false;
-	}
-	
-	@Override
 	public Packet getDescriptionPacket() {
 		return ElConQore.packetHandler.getPacketToClient(new MessageTileNBT(xCoord, yCoord, zCoord, getNBT()));
 	}
