@@ -18,6 +18,9 @@ public class EQConfig {
 	public String lastDiscoveredVersion = "";
 	public String lastDiscoveredVersionType = "";
 	
+	public static int BLOCK_OVERLAY_RENDER_ID;
+	public static int BLOCK_FLUID_RENDER_ID;
+	
 	public EQConfig(Configuration config) {
 		this.config = config;
 	}

@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import elcon.mods.elconqore.lang.LanguageManager;
 
-public class BlockMetadata extends Block {
+public abstract class BlockMetadata extends Block {
 
 	public BlockMetadata(Material material) {
 		super(material);

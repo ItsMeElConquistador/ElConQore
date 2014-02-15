@@ -15,14 +15,19 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import elcon.mods.elconqore.lang.LanguageManager;
 import elcon.mods.elconqore.network.EQCodec;
 import elcon.mods.elconqore.network.EQMessage;
 import elcon.mods.elconqore.network.EQPacketHandler;
 import elcon.mods.elconqore.network.EQPacketHandlerServer;
+import elcon.mods.elconqore.tileentities.TileEntityExtended;
+import elcon.mods.elconqore.tileentities.TileEntityMetadata;
 import elcon.mods.elconqore.tileentities.TileEntityMetadata.MessageTileMetadata;
+import elcon.mods.elconqore.tileentities.TileEntityNBT;
 import elcon.mods.elconqore.tileentities.TileEntityNBT.MessageTileNBT;
+import elcon.mods.elconqore.tileentities.TileEntityOwned;
 import elcon.mods.elconqore.tileentities.TileEntityOwned.MessageTileOwned;
 
 @Mod(modid = EQReference.MOD_ID, name = EQReference.NAME, version = EQReference.VERSION, acceptedMinecraftVersions = EQReference.MC_VERSION, dependencies = EQReference.DEPENDENCIES)
@@ -51,6 +56,12 @@ public class ElConQore {
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
 		new EQMod(this, EQReference.VERSION_URL, new EQConfig(event.getSuggestedConfigurationFile()), event.getSourceFile());
+		
+		//register tileentities
+		GameRegistry.registerTileEntity(TileEntityExtended.class, "TileExteneded");
+		GameRegistry.registerTileEntity(TileEntityMetadata.class, "TileMetadata");
+		GameRegistry.registerTileEntity(TileEntityNBT.class, "TileNBT");
+		GameRegistry.registerTileEntity(TileEntityOwned.class, "TileOwned");
 	}
 
 	@SuppressWarnings("unchecked")
