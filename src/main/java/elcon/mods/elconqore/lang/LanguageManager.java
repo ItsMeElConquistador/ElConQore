@@ -13,8 +13,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 
-import net.minecraft.client.Minecraft;
-
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -44,7 +42,7 @@ public class LanguageManager {
 				if(!modName.equals("ElConQore")) {
 					ElConQore.log.info("[LanguageManager] Loading languages for mod: " + modName);
 					File sourceFile = EQMod.mods.get(modName).sourceFile;
-					File languageDirectory = new File(Minecraft.getMinecraft().mcDataDir, "/lang/" + modName.toLowerCase() + "/");
+					File languageDirectory = new File(ElConQore.minecraftDir, "/lang/" + modName.toLowerCase() + "/");
 					languageDirectory.delete();
 					languageDirectory.mkdirs();
 					if(sourceFile.isDirectory()) {

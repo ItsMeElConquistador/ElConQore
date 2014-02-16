@@ -1,5 +1,7 @@
 package elcon.mods.elconqore;
 
+import java.io.File;
+
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +19,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.lang.LanguageManager;
 import elcon.mods.elconqore.network.EQCodec;
 import elcon.mods.elconqore.network.EQMessage;
@@ -44,19 +47,23 @@ public class ElConQore {
 	public static EQPacketHandler<EQMessage> packetHandler;
 
 	public static Logger log = LogManager.getLogger(EQReference.MOD_ID);
+	
+	public static File minecraftDir;
 
 	public ElConQore() {
 		if(instance == null) {
 			instance = this;
 		}
 		if(proxy == null) {
-			proxy = FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? new EQClientProxy() : new EQCommonProxy();
+			proxy = FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? createProxyClient() : createProxyServer();
 		}
 	}
 
 	@EventHandler
 	@Subscribe
 	public void preInit(FMLPreInitializationEvent event) {
+		minecraftDir = event.getSuggestedConfigurationFile().getParentFile().getParentFile();
+		
 		new EQMod(this, EQReference.VERSION_URL, new EQConfig(event.getSuggestedConfigurationFile()), event.getSourceFile());
 		
 		//register tileentities
@@ -93,6 +100,15 @@ public class ElConQore {
 	@Subscribe
 	public void postInit(FMLPostInitializationEvent event) {
 
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private EQCommonProxy createProxyClient() {
+		return new EQClientProxy();
+	}
+	
+	private EQCommonProxy createProxyServer() {
+		return new EQCommonProxy();
 	}
 
 	private void addElConQoreLocalizations() {
