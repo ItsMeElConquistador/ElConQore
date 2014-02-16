@@ -26,7 +26,7 @@ public class PlayerCoreServer extends EntityPlayerMP {
 		if(playerCoreIndex < PlayerAPI.playerCoreServerList.size()) {
 			Class<? extends PlayerCoreServer> nextPlayerCoreClass = PlayerAPI.playerCoreServerList.get(playerCoreIndex);
 			try {
-				Constructor<? extends PlayerCoreServer> constructor = nextPlayerCoreClass.getConstructor(new Class<?>[]{MinecraftServer.class, WorldServer.class, GameProfile.class, ItemInWorldManager.class, Integer.TYPE, PlayerCoreRender.class});
+				Constructor<? extends PlayerCoreServer> constructor = nextPlayerCoreClass.getConstructor(new Class<?>[]{MinecraftServer.class, WorldServer.class, GameProfile.class, ItemInWorldManager.class, Integer.TYPE, PlayerCoreServer.class});
 				nextPlayerCore = (constructor.newInstance(new Object[]{mcServer, worldServer, gameProfile, itemInWorldManager, Integer.valueOf(playerCoreIndex + 1), player}));
 			} catch(Exception e) {
 				e.printStackTrace();
