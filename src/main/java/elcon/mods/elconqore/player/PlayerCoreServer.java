@@ -33,7 +33,9 @@ public class PlayerCoreServer extends EntityPlayerMP {
 			}
 		} else {
 			nextPlayerCore = player;
+			player.theItemInWorldManager.thisPlayerMP = player;
 		}
+		theItemInWorldManager.thisPlayerMP = player;
 		init = true;
 	}
 
