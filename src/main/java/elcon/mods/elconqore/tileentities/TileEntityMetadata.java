@@ -27,13 +27,13 @@ public class TileEntityMetadata extends TileEntityExtended {
 		@Override
 		public void encodeTo(ByteBuf target) {
 			super.encodeTo(target);
-			target.writeByte(metadata);
+			target.writeShort(metadata);
 		}
 		
 		@Override
 		public void decodeFrom(ByteBuf source) {
 			super.decodeFrom(source);
-			metadata = source.readUnsignedByte();
+			metadata = source.readUnsignedShort();
 		}
 		
 		@Override
@@ -73,8 +73,8 @@ public class TileEntityMetadata extends TileEntityExtended {
 	}
 	
 	public void setTileMetadata(int metadata) {
-		if(metadata >= 256) {
-			ElConQore.log.error(getBlockType().getUnlocalizedName() + " (" + getBlockType() + ") is using metadata >= 256, this will crash or derp!");
+		if(metadata >= 65536) {
+			ElConQore.log.error(getBlockType().getUnlocalizedName() + " (" + getBlockType() + ") is using metadata >= 65536, this will crash or derp!");
 		}
 		this.metadata = metadata;
 	}
