@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.EQConfig;
 import elcon.mods.elconqore.blocks.BlockFluidMetadata;
-import elcon.mods.elconqore.blocks.BlockOverlay;
+import elcon.mods.elconqore.blocks.IBlockOverlay;
 
 @SideOnly(Side.CLIENT)
 public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
@@ -66,7 +66,7 @@ public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	public boolean renderWorldBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
 		if(modelID == EQConfig.BLOCK_OVERLAY_RENDER_ID) {
 			boolean flag = renderer.renderStandardBlock(block, x, y, z);
-			renderBlockOverlay(blockAccess, (BlockOverlay) block, x, y, z, renderer);
+			renderBlockOverlay(blockAccess, block, x, y, z, renderer);
 			return flag;
 		} else if(modelID == EQConfig.BLOCK_FLUID_RENDER_ID) {
 			if(!(block instanceof BlockFluidMetadata)) {
@@ -271,56 +271,57 @@ public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	
 	public static boolean renderBlockWithOverlay(IBlockAccess blockAcccess, Block block, int x, int y, int z, RenderBlocks renderer) {
 		boolean flag = renderer.renderStandardBlock(block, x, y, z);
-		renderBlockOverlay(blockAcccess, (BlockOverlay) block, x, y, z, renderer);
+		renderBlockOverlay(blockAcccess, block, x, y, z, renderer);
 		return flag;
 	}
 
-	private static boolean renderBlockOverlay(IBlockAccess blockAccess, BlockOverlay block, int x, int y, int z, RenderBlocks renderer) {
+	private static boolean renderBlockOverlay(IBlockAccess blockAccess, Block block, int x, int y, int z, RenderBlocks renderer) {
+		IBlockOverlay blockOverlay = (IBlockOverlay) block;
 		int mixedBrightness = block.getMixedBrightnessForBlock(blockAccess, x, y, z);
 		IIcon overlay = null;		
-		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 0);
-		if(overlay != null && block.shouldOverlaySideBeRendered(blockAccess, x, y, z, 0)) {
-			int color = block.getBlockOverlayColor(blockAccess, x, y, z, 0);
+		overlay = blockOverlay.getBlockOverlayTexture(blockAccess, x, y, z, 0);
+		if(overlay != null && blockOverlay.shouldOverlaySideBeRendered(blockAccess, x, y, z, 0)) {
+			int color = blockOverlay.getBlockOverlayColor(blockAccess, x, y, z, 0);
 			float sideR = (color >> 16 & 0xFF) / 255.0F;
 			float sideG = (color >> 8 & 0xFF) / 255.0F;
 			float sideB = (color & 0xFF) / 255.0F;
 			renderBottomFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, sideR, sideG, sideB);
 		}
-		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 1);
-		if(overlay != null && block.shouldOverlaySideBeRendered(blockAccess, x, y, z, 1)) {
-			int color = block.getBlockOverlayColor(blockAccess, x, y, z, 1);
+		overlay = blockOverlay.getBlockOverlayTexture(blockAccess, x, y, z, 1);
+		if(overlay != null && blockOverlay.shouldOverlaySideBeRendered(blockAccess, x, y, z, 1)) {
+			int color = blockOverlay.getBlockOverlayColor(blockAccess, x, y, z, 1);
 			float sideR = (color >> 16 & 0xFF) / 255.0F;
 			float sideG = (color >> 8 & 0xFF) / 255.0F;
 			float sideB = (color & 0xFF) / 255.0F;
 			renderTopFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, sideR, sideG, sideB);
 		}
-		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 2);
-		if(overlay != null && block.shouldOverlaySideBeRendered(blockAccess, x, y, z, 2)) {
-			int color = block.getBlockOverlayColor(blockAccess, x, y, z, 2);
+		overlay = blockOverlay.getBlockOverlayTexture(blockAccess, x, y, z, 2);
+		if(overlay != null && blockOverlay.shouldOverlaySideBeRendered(blockAccess, x, y, z, 2)) {
+			int color = blockOverlay.getBlockOverlayColor(blockAccess, x, y, z, 2);
 			float sideR = (color >> 16 & 0xFF) / 255.0F;
 			float sideG = (color >> 8 & 0xFF) / 255.0F;
 			float sideB = (color & 0xFF) / 255.0F;
 			renderEastFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, sideR, sideG, sideB);
 		}
-		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 3);
-		if(overlay != null && block.shouldOverlaySideBeRendered(blockAccess, x, y, z, 3)) {
-			int color = block.getBlockOverlayColor(blockAccess, x, y, z, 3);
+		overlay = blockOverlay.getBlockOverlayTexture(blockAccess, x, y, z, 3);
+		if(overlay != null && blockOverlay.shouldOverlaySideBeRendered(blockAccess, x, y, z, 3)) {
+			int color = blockOverlay.getBlockOverlayColor(blockAccess, x, y, z, 3);
 			float sideR = (color >> 16 & 0xFF) / 255.0F;
 			float sideG = (color >> 8 & 0xFF) / 255.0F;
 			float sideB = (color & 0xFF) / 255.0F;
 			renderWestFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, sideR, sideG, sideB);
 		}
-		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 4);
-		if(overlay != null && block.shouldOverlaySideBeRendered(blockAccess, x, y, z, 4)) {
-			int color = block.getBlockOverlayColor(blockAccess, x, y, z, 4);
+		overlay = blockOverlay.getBlockOverlayTexture(blockAccess, x, y, z, 4);
+		if(overlay != null && blockOverlay.shouldOverlaySideBeRendered(blockAccess, x, y, z, 4)) {
+			int color = blockOverlay.getBlockOverlayColor(blockAccess, x, y, z, 4);
 			float sideR = (color >> 16 & 0xFF) / 255.0F;
 			float sideG = (color >> 8 & 0xFF) / 255.0F;
 			float sideB = (color & 0xFF) / 255.0F;
 			renderNorthFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, sideR, sideG, sideB);
 		}
-		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 5);
-		if(overlay != null && block.shouldOverlaySideBeRendered(blockAccess, x, y, z, 5)) {
-			int color = block.getBlockOverlayColor(blockAccess, x, y, z, 5);
+		overlay = blockOverlay.getBlockOverlayTexture(blockAccess, x, y, z, 5);
+		if(overlay != null && blockOverlay.shouldOverlaySideBeRendered(blockAccess, x, y, z, 5)) {
+			int color = blockOverlay.getBlockOverlayColor(blockAccess, x, y, z, 5);
 			float sideR = (color >> 16 & 0xFF) / 255.0F;
 			float sideG = (color >> 8 & 0xFF) / 255.0F;
 			float sideB = (color & 0xFF) / 255.0F;
@@ -401,13 +402,14 @@ public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
 		if(modelID == EQConfig.BLOCK_OVERLAY_RENDER_ID) {
-			renderItemBlockOverlay((BlockOverlay) block, metadata, modelID, renderer);
+			renderItemBlockOverlay(block, metadata, modelID, renderer);
 		} else if(modelID == EQConfig.BLOCK_FLUID_RENDER_ID) {
 			
 		}
 	}
 	
-	public void renderItemBlockOverlay(BlockOverlay block, int metadata, int modelID, RenderBlocks renderer) {
+	public void renderItemBlockOverlay(Block block, int metadata, int modelID, RenderBlocks renderer) {
+		IBlockOverlay blockOverlay = (IBlockOverlay) block;
 		IIcon overlay = null;
 		Tessellator tessellator = Tessellator.instance;
 		if(renderer.useInventoryTint) {
@@ -426,7 +428,7 @@ public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, -1.0F, 0.0F);
 		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 0, metadata));
-		overlay = block.getBlockOverlayTexture(0, metadata);
+		overlay = blockOverlay.getBlockOverlayTexture(0, metadata);
 		if(overlay != null) {
 			renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -435,7 +437,7 @@ public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 1.0F, 0.0F);
 		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
-		overlay = block.getBlockOverlayTexture(1, metadata);
+		overlay = blockOverlay.getBlockOverlayTexture(1, metadata);
 		if(overlay != null) {
 			renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -444,7 +446,7 @@ public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, -1.0F);
 		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 2, metadata));
-		overlay = block.getBlockOverlayTexture(2, metadata);
+		overlay = blockOverlay.getBlockOverlayTexture(2, metadata);
 		if(overlay != null) {
 			renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -453,7 +455,7 @@ public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, 1.0F);
 		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 3, metadata));
-		overlay = block.getBlockOverlayTexture(3, metadata);
+		overlay = blockOverlay.getBlockOverlayTexture(3, metadata);
 		if(overlay != null) {
 			renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -462,7 +464,7 @@ public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
 		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 4, metadata));
-		overlay = block.getBlockOverlayTexture(4, metadata);
+		overlay = blockOverlay.getBlockOverlayTexture(4, metadata);
 		if(overlay != null) {
 			renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -471,7 +473,7 @@ public class EQBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(1.0F, 0.0F, 0.0F);
 		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 5, metadata));
-		overlay = block.getBlockOverlayTexture(5, metadata);
+		overlay = blockOverlay.getBlockOverlayTexture(5, metadata);
 		if(overlay != null) {
 			renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
