@@ -25,7 +25,7 @@ import elcon.mods.elconqore.fluids.FluidMetadata;
 
 public class BlockFluidMetadata extends BlockExtendedMetadata implements IFluidBlock {
 
-	public HashMap<Integer, Boolean> displacementIds = new HashMap<Integer, Boolean>();
+	public HashMap<Block, Boolean> displacementIds = new HashMap<Block, Boolean>();
 
 	public boolean[] isOptimalFlowDirection = new boolean[4];
 	public int[] flowCost = new int[4];
@@ -40,12 +40,12 @@ public class BlockFluidMetadata extends BlockExtendedMetadata implements IFluidB
 		setTickRandomly(true);
 		disableStats();
 
-		displacementIds.put(Block.getIdFromBlock(Blocks.wooden_door), false);
-		displacementIds.put(Block.getIdFromBlock(Blocks.iron_door), false);
-		displacementIds.put(Block.getIdFromBlock(Blocks.standing_sign), false);
-		displacementIds.put(Block.getIdFromBlock(Blocks.wall_sign), false);
-		displacementIds.put(Block.getIdFromBlock(Blocks.reeds), false);
-		displacementIds.put(Block.getIdFromBlock(Blocks.snow), true);
+		displacementIds.put(Blocks.wooden_door, false);
+		displacementIds.put(Blocks.iron_door, false);
+		displacementIds.put(Blocks.standing_sign, false);
+		displacementIds.put(Blocks.wall_sign, false);
+		displacementIds.put(Blocks.reeds, false);
+		displacementIds.put(Blocks.snow_layer, true);
 	}
 
 	public BlockFluidMetadata(Material material, FluidMetadata[] fluids) {
@@ -160,14 +160,14 @@ public class BlockFluidMetadata extends BlockExtendedMetadata implements IFluidB
 		if(blockAccess.isAirBlock(otherX, otherY, otherZ)) {
 			return true;
 		}
-		int id = Block.getIdFromBlock(blockAccess.getBlock(otherX, otherY, otherZ));
-		if(id == Block.getIdFromBlock(this)) {
+		Block otherBlock = blockAccess.getBlock(otherX, otherY, otherZ);
+		if(Block.getIdFromBlock(otherBlock) == Block.getIdFromBlock(this)) {
 			return false;
 		}
-		if(displacementIds.containsKey(id)) {
-			return displacementIds.get(id);
+		if(displacementIds.containsKey(otherBlock)) {
+			return displacementIds.get(otherBlock);
 		}
-		Material material = Block.getBlockById(id).getMaterial();
+		Material material = otherBlock.getMaterial();
 		if(material.blocksMovement() || material == Material.portal) {
 			return false;
 		}
