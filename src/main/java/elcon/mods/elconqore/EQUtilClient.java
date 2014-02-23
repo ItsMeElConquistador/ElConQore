@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityDiggingFX;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
@@ -64,5 +65,9 @@ public class EQUtilClient {
 
 	public static World getWorld() {
 		return Minecraft.getMinecraft().theWorld;
+	}
+	
+	public static EntityPlayer getPlayer() {
+		return Minecraft.getMinecraft().thePlayer;
 	}
 }
