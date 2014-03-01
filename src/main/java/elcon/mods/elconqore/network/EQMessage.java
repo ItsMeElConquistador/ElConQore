@@ -138,7 +138,7 @@ public abstract class EQMessage {
 		FluidStack fluid = null;
 		int id = source.readShort();
 		if(id > 0) {
-			fluid = new FluidStack(source.readShort(), source.readShort());
+			fluid = new FluidStack(id, source.readShort());
 			fluid.tag = readNBTTagCompound(source);
 		}
 		return fluid;
