@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 
 import com.google.common.base.Charsets;
 
@@ -112,9 +113,7 @@ public abstract class EQMessage {
 		ItemStack stack = null;
 		short id = source.readShort();
 		if(id >= 0) {
-			byte size = source.readByte();
-			short meta = source.readShort();
-			stack = new ItemStack(Item.getItemById(id), size, meta);
+			stack = new ItemStack(Item.getItemById(id), source.readByte(), source.readShort());
 			stack.stackTagCompound = readNBTTagCompound(source);
 		}
 		return stack;
@@ -132,6 +131,26 @@ public abstract class EQMessage {
 				nbt = stack.stackTagCompound;
 			}
 			writeNBTTagCompound(target, nbt);
+		}
+	}
+	
+	public FluidStack readFluidStack(ByteBuf source) {
+		FluidStack fluid = null;
+		int id = source.readShort();
+		if(id > 0) {
+			fluid = new FluidStack(source.readShort(), source.readShort());
+			fluid.tag = readNBTTagCompound(source);
+		}
+		return fluid;
+	}
+	
+	public void writeFluidStack(ByteBuf target, FluidStack fluid) {
+		if(fluid == null) {
+			target.writeShort(-1);
+		} else {
+			target.writeShort(fluid.fluidID);
+			target.writeShort(fluid.amount);
+			writeNBTTagCompound(target, fluid.tag);			
 		}
 	}
 }
