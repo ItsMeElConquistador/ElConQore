@@ -109,7 +109,7 @@ public class InventoryBasic implements IInventory {
 	public void readFromNBT(NBTTagList list) {
 		for(int i = 0; i < list.tagCount(); i++) {
 			NBTTagCompound tag = (NBTTagCompound) list.getCompoundTagAt(i);
-			int slot = tag.getByte("Slot") & 255;
+			int slot = tag.getInteger("Slot");
 			ItemStack stack = ItemStack.loadItemStackFromNBT(tag);
 			if(stack != null && slot >= 0 && slot < getSizeInventory()) {
 				stacks[slot] = stack;
@@ -121,7 +121,7 @@ public class InventoryBasic implements IInventory {
 		for(int i = 0; i < getSizeInventory(); i++) {
 			if(stacks[i] != null) {
 				NBTTagCompound tag = new NBTTagCompound();
-				tag.setByte("Slot", (byte) i);
+				tag.setInteger("Slot", i);
 				stacks[i].writeToNBT(tag);
 				list.appendTag(tag);
 			}
