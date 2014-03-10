@@ -14,6 +14,11 @@ public class InventoryBasic implements IInventory {
 	protected ItemStack[] stacks;
 	protected String unlocalizedName;
 	
+	public InventoryBasic(int size, String unlocalizedName) {
+		this.stacks = new ItemStack[size];
+		this.unlocalizedName = unlocalizedName;
+	}
+	
 	public InventoryBasic(Container container, int size, String unlocalizedName) {
 		this.container = container;
 		this.stacks = new ItemStack[size];
@@ -47,14 +52,18 @@ public class InventoryBasic implements IInventory {
 			if(stacks[slot].stackSize <= amount) {
 				stack = stacks[slot];
 				stacks[slot] = null;
-				container.onCraftMatrixChanged(this);
+				if(container != null) {
+					container.onCraftMatrixChanged(this);
+				}
 				return stack;
 			} else {
 				stack = stacks[slot].splitStack(amount);
 				if(stacks[slot].stackSize == 0) {
 					stacks[slot] = null;
 				}
-				container.onCraftMatrixChanged(this);
+				if(container != null) {
+					container.onCraftMatrixChanged(this);
+				}
 				return stack;
 			}
 		}
@@ -65,7 +74,9 @@ public class InventoryBasic implements IInventory {
 	public void setInventorySlotContents(int slot, ItemStack stack) {
 		if(slot < getSizeInventory()) {
 			stacks[slot] = stack;
-			container.onCraftMatrixChanged(this);
+			if(container != null) {
+				container.onCraftMatrixChanged(this);
+			}
 		}
 	}
 
