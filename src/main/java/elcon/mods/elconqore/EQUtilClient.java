@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class EQUtilClient {
 
 	@SideOnly(Side.CLIENT)
-	public static boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer, Block block, int metadata) {
+	public static boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer, Block block, int metadata, int side) {
 		byte size = 4;
 		for(int i = 0; i < size; i++) {
 			for(int j = 0; j < size; j++) {
@@ -22,7 +22,7 @@ public class EQUtilClient {
 					double xx = (double) x + ((double) i + 0.5D) / (double) size;
 					double yy = (double) y + ((double) j + 0.5D) / (double) size;
 					double zz = (double) z + ((double) k + 0.5D) / (double) size;
-					effectRenderer.addEffect((new EntityDiggingFX(world, xx, yy, zz, xx - (double) x - 0.5D, yy - (double) y - 0.5D, zz - (double) z - 0.5D, block, metadata)).applyColourMultiplier(x, y, z));
+					effectRenderer.addEffect((new EntityDiggingFX(world, xx, yy, zz, xx - (double) x - 0.5D, yy - (double) y - 0.5D, zz - (double) z - 0.5D, block, metadata, side)).applyColourMultiplier(x, y, z));
 				}
 			}
 		}
@@ -30,7 +30,7 @@ public class EQUtilClient {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static boolean addBlockHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer, int metadata) {
+	public static boolean addBlockHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer, int metadata, int side) {
 		int x = target.blockX;
 		int y = target.blockY;
 		int z = target.blockZ;
@@ -59,7 +59,7 @@ public class EQUtilClient {
 		if(sideHit == 5) {
 			xx = (double) x + block.getBlockBoundsMaxX() + (double) f;
 		}
-		effectRenderer.addEffect((new EntityDiggingFX(world, xx, yy, zz, 0.0D, 0.0D, 0.0D, block, metadata)).applyColourMultiplier(x, y, z).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
+		effectRenderer.addEffect((new EntityDiggingFX(world, xx, yy, zz, 0.0D, 0.0D, 0.0D, block, metadata, side)).applyColourMultiplier(x, y, z).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
 		return true;
 	}
 

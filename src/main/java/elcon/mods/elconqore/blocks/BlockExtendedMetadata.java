@@ -1,12 +1,14 @@
 package elcon.mods.elconqore.blocks;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -16,6 +18,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.EQUtilClient;
@@ -23,6 +26,9 @@ import elcon.mods.elconqore.lang.LanguageManager;
 import elcon.mods.elconqore.tileentities.TileEntityMetadata;
 
 public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
+
+	private HashMap<Integer, Integer> harvestLevels = new HashMap<Integer, Integer>();
+	private HashMap<Integer, String> harvestTools = new HashMap<Integer, String>();
 
 	public BlockExtendedMetadata(Material material) {
 		super(material);
@@ -53,9 +59,47 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
 		return meta;
 	}
-	
+
 	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
-		return true;
+		return ForgeHooks.canHarvestBlock(this, player, meta);
+	}
+
+	@Override
+	public int getDamageValue(World world, int x, int y, int z) {
+		return getDroppedMetadata(world, x, y, z, getMetadata(world, x, y, z), 0);
+	}
+
+	@Override
+	public int getHarvestLevel(int meta) {
+		return harvestLevels.containsKey(meta) ? harvestLevels.get(meta) : harvestLevels.get(OreDictionary.WILDCARD_VALUE);
+	}
+
+	@Override
+	public String getHarvestTool(int meta) {
+		return harvestTools.containsKey(meta) ? harvestTools.get(meta) : harvestTools.get(OreDictionary.WILDCARD_VALUE);
+	}
+
+	@Override
+	public boolean isToolEffective(String type, int meta) {
+		if(type.equals("pickaxe") && (this == Blocks.redstone_ore || this == Blocks.lit_redstone_ore || this == Blocks.obsidian)) {
+			return false;
+		}
+		if(!harvestTools.containsKey(meta)) {
+			return false;
+		}
+		return harvestTools.get(meta).equals(type);
+	}
+
+	@Override
+	public void setHarvestLevel(String tool, int level) {
+		harvestLevels.put(OreDictionary.WILDCARD_VALUE, level);
+		harvestTools.put(OreDictionary.WILDCARD_VALUE, tool);
+	}
+
+	@Override
+	public void setHarvestLevel(String tool, int level, int meta) {
+		harvestLevels.put(meta, level);
+		harvestTools.put(meta, tool);
 	}
 
 	public int getMetadata(IBlockAccess blockAccess, int x, int y, int z) {
@@ -131,21 +175,21 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
-		return EQUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, getMetadata(world, x, y, z));
+		return EQUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, getMetadata(world, x, y, z), 2);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean addHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
-		return EQUtilClient.addBlockHitEffects(world, target, effectRenderer, getMetadata(world, target.blockX, target.blockY, target.blockZ));
+		return EQUtilClient.addBlockHitEffects(world, target, effectRenderer, getMetadata(world, target.blockX, target.blockY, target.blockZ), 2);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return getIcon(side, getMetadata(blockAccess, x, y, z));
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegistry) {
