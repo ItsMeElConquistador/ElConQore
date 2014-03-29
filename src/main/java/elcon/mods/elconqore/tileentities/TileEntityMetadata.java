@@ -51,6 +51,7 @@ public class TileEntityMetadata extends TileEntityExtended {
 	}
 	
 	private int metadata = 0;
+	private int oldMetadata = -1;
 	
 	public TileEntityMetadata() {
 	}
@@ -65,6 +66,10 @@ public class TileEntityMetadata extends TileEntityExtended {
 	
 	@Override
 	public Packet getDescriptionPacket() {
+		if(metadata == oldMetadata) {
+			return null;
+		}
+		oldMetadata = metadata;
 		return ElConQore.packetHandler.getPacketToClient(new MessageTileMetadata(xCoord, yCoord, zCoord, getTileMetadata()));
 	}
 	
