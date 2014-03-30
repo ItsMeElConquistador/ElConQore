@@ -163,11 +163,9 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
 		int count = quantityDropped(metadata, fortune, world.rand);
-		for(int i = 0; i < count; i++) {
-			Item item = getItemDropped(metadata, world.rand, fortune);
-			if(item != null) {
-				ret.add(new ItemStack(item, 1, getDroppedMetadata(world, x, y, z, metadata, fortune)));
-			}
+		Item item = getItemDropped(metadata, world.rand, fortune);
+		if(item != null) {
+			ret.add(new ItemStack(item, count, getDroppedMetadata(world, x, y, z, metadata, fortune)));
 		}
 		return ret;
 	}
