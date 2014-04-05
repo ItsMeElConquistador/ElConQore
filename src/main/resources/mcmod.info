@@ -3,7 +3,7 @@
   "modid": "ElConQore",
   "name": "ElConQore",
   "description": "ElConQore is a library made by ElConquistador, which adds commonly used functions",
-  "version": "@version@ (build @buildnumber@)",
+  "version": "${version} (build ${buildnumber})",
   "url": "http://elcon.agecraft.org",
   "updateUrl": "",
   "authorList": [
