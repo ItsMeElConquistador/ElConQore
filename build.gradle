@@ -40,6 +40,10 @@ version = "${config.minecraft_version}-${config.mod_version}.${System.getenv().B
 
 processResources {
 	filter(ReplaceTokens, tokens: ['version': project.config.mod_version, 'mcversion': project.config.minecraft_version, 'buildnumber': "${System.getenv().BUILD_NUMBER}"])	
+	
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'mcmod.info'
+	}
 }
 
 task release(type: Copy) {
