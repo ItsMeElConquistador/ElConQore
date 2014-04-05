@@ -48,7 +48,7 @@ public class EQInstanceTransformer implements IClassTransformer {
 
 	public void addInstanceTransforms() {
 		if(instanceTransforms.isEmpty()) {
-			ElConQore.log.info("[InstanceTransformer] Registered instance transforms");
+			//ElConQore.log.info("[InstanceTransformer] Registered instance transforms");
 		}
 	}
 
