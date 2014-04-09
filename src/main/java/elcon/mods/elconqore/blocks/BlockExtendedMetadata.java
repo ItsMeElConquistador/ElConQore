@@ -139,11 +139,13 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 			drops = world.getBlock(x, y, z).getDrops(world, x, y, z, tile.getTileMetadata(), EnchantmentHelper.getFortuneModifier(player));
 		}
 		boolean hasBeenBroken = world.setBlockToAir(x, y, z);
-		if(hasBeenBroken && !world.isRemote && drops.size() > 0 && (player == null || !player.capabilities.isCreativeMode) && shouldDropItems(world, x, y, z, tile.getTileMetadata(), player, player.getCurrentEquippedItem())) {
-			float chance = ForgeEventFactory.fireBlockHarvesting(drops, world, this, x, y, z, tile.getTileMetadata(), EnchantmentHelper.getFortuneModifier(player), 1.0F, false, player);
-			for(ItemStack drop : drops) {
-				if(world.rand.nextFloat() <= chance) {
-					dropBlockAsItem(world, x, y, z, drop);
+		if(hasBeenBroken && !world.isRemote) {
+			if(drops.size() > 0 && (player == null || !player.capabilities.isCreativeMode) && shouldDropItems(world, x, y, z, tile.getTileMetadata(), player, player.getCurrentEquippedItem())) {
+				float chance = ForgeEventFactory.fireBlockHarvesting(drops, world, this, x, y, z, tile.getTileMetadata(), EnchantmentHelper.getFortuneModifier(player), 1.0F, false, player);
+				for(ItemStack drop : drops) {
+					if(world.rand.nextFloat() <= chance) {
+						dropBlockAsItem(world, x, y, z, drop);
+					}
 				}
 			}
 			tile.hasDroppped = true;
@@ -155,6 +157,7 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 	public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float chance, int fortune) {
 		TileEntityMetadata tile = (TileEntityMetadata) world.getTileEntity(x, y, z);
 		if(tile != null && !tile.hasDroppped) {
+			System.out.println("OLD");
 			super.dropBlockAsItemWithChance(world, x, y, z, meta, chance, fortune);
 		}
 	}
