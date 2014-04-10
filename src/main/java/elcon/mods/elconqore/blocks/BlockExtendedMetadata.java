@@ -157,7 +157,6 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 	public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float chance, int fortune) {
 		TileEntityMetadata tile = (TileEntityMetadata) world.getTileEntity(x, y, z);
 		if(tile != null && !tile.hasDroppped) {
-			System.out.println("OLD");
 			super.dropBlockAsItemWithChance(world, x, y, z, meta, chance, fortune);
 		}
 	}
