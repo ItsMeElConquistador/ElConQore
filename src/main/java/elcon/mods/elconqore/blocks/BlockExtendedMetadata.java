@@ -8,7 +8,6 @@ import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -71,19 +70,16 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 
 	@Override
 	public int getHarvestLevel(int meta) {
-		return harvestLevels.containsKey(meta) ? harvestLevels.get(meta) : harvestLevels.get(OreDictionary.WILDCARD_VALUE);
+		return harvestLevels.containsKey(meta) ? harvestLevels.get(meta) : (harvestLevels.containsKey(OreDictionary.WILDCARD_VALUE) ? harvestLevels.get(OreDictionary.WILDCARD_VALUE) : 0);
 	}
 
 	@Override
 	public String getHarvestTool(int meta) {
-		return harvestTools.containsKey(meta) ? harvestTools.get(meta) : harvestTools.get(OreDictionary.WILDCARD_VALUE);
+		return harvestTools.containsKey(meta) ? harvestTools.get(meta) : (harvestTools.containsKey(OreDictionary.WILDCARD_VALUE) ? harvestTools.get(OreDictionary.WILDCARD_VALUE) : "");
 	}
 
 	@Override
 	public boolean isToolEffective(String type, int meta) {
-		if(type.equals("pickaxe") && (this == Blocks.redstone_ore || this == Blocks.lit_redstone_ore || this == Blocks.obsidian)) {
-			return false;
-		}
 		if(!harvestTools.containsKey(meta)) {
 			return false;
 		}
