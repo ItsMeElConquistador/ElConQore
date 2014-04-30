@@ -36,7 +36,9 @@ public class LanguageManager {
 
 	public static void load() {
 		if(!loaded) {
-			languages.put("en_US", new Language("en_US"));
+			if(!languages.containsKey("en_US")) {
+				languages.put("en_US", new Language("en_US"));
+			}
 			ElConQore.log.info("[LanguageManager] Loading languages...");
 			for(String modName : EQMod.mods.keySet()) {
 				if(!modName.equals("ElConQore")) {

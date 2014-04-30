@@ -74,7 +74,6 @@ public class ElConQore {
 		GameRegistry.registerTileEntity(TileEntityStructure.class, "TileStructure");
 	}
 
-	@SuppressWarnings("unchecked")
 	@EventHandler
 	@Subscribe
 	public void init(FMLInitializationEvent event) {
