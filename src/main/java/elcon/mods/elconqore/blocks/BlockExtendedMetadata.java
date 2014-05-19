@@ -121,9 +121,9 @@ public abstract class BlockExtendedMetadata extends BlockExtendedContainer {
 			return 0.0F;
 		}
 		if(!ForgeHooks.canHarvestBlock(this, player, metadata)) {
-			return player.getBreakSpeed(this, true, metadata) / hardness / 100F;
+			return player.getBreakSpeed(this, true, metadata, x, y, z) / hardness / 100F;
 		} else {
-			return player.getBreakSpeed(this, false, metadata) / hardness / 30F;
+			return player.getBreakSpeed(this, false, metadata, x, y, z) / hardness / 30F;
 		}
 	}
 
