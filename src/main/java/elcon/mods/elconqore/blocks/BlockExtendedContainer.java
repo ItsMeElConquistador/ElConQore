@@ -55,10 +55,11 @@ public abstract class BlockExtendedContainer extends BlockContainer {
 
 	public TileEntity getTileEntity(IBlockAccess blockAccess, int x, int y, int z) {
 		TileEntity tile = (TileEntity) blockAccess.getTileEntity(x, y, z);
-		if(tile == null || !tile.getClass().isAssignableFrom(getTileEntityClass())) {
-			tile = createNewTileEntity(null, blockAccess.getBlockMetadata(x, y, z));
+		BlockContainer block = (BlockContainer) blockAccess.getBlock(x, y, z);
+		if(tile == null || (block instanceof BlockExtendedContainer && !tile.getClass().isAssignableFrom(((BlockExtendedContainer) block).getTileEntityClass()))) {
+			tile = block.createNewTileEntity(null, blockAccess.getBlockMetadata(x, y, z));
 			if(blockAccess instanceof World) {
-				tile = createNewTileEntity(((World) blockAccess), blockAccess.getBlockMetadata(x, y, z));
+				tile = block.createNewTileEntity(((World) blockAccess), blockAccess.getBlockMetadata(x, y, z));
 				((World) blockAccess).setTileEntity(x, y, z, tile);
 			}
 		}
